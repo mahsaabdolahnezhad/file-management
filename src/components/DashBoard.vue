@@ -3,14 +3,13 @@
  <div class="container">
     <header class="header">
       <div class="header-content">
-        <button class="menu-button" @click="toggleNavigation">☰</button>
+        <button class="menu-button" @click="toggleNavigation"><i class="fas fa-bars"></i></button>
         <div class="username">{{ username }}</div>
       </div>
       <nav :class="{ 'open': isNavigationOpen }">
-        <button class="exit-button" @click="closeNavigation">✖</button>
         <ul>
-          <li>مدیریت کاربران</li>
-          <li>مدیریت گروه های کاربری </li>
+          <li @click="navigateToRoute('RouteIndex1')">User Management</li>
+          <li @click="navigateToRoute('RouteIndex2')">Manage User groups</li>
           <li>فضای ذخیره سازی</li>
           <li>مدیریت فایل ها</li>
         </ul>
@@ -32,7 +31,7 @@ export default {
   name: 'DashBoard',
     data() {
     return {
-      isNavigationOpen: false,
+      isNavigationOpen: true,
      username: ' ',
     };
   },
@@ -41,6 +40,9 @@ export default {
     this.username = this.$route.query.username || 'Guest';
   },
   methods: {
+   navigateToRoute(routeName) {
+    this.$router.push({ name: routeName });
+  },
     toggleNavigation() {
       this.isNavigationOpen = !this.isNavigationOpen;
     },
@@ -63,7 +65,25 @@ container{
 }
 
 .header {
-  background-color: #c3bef0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+  color: #fff;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.username {
+  margin-right: 10px;
+  color:black;
 }
 
 .header-content {
@@ -71,33 +91,25 @@ container{
   align-items: center;
 }
 
-.menu-button,
-.exit-button {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  padding:20px;
-}
-
-.username {
-  margin-left: 10px;
-}
 
 nav {
   display: none;
-  position: absolute;
-  top: 50px;
-  right: 10px;
-  background-color: #cca8e9;
-  border: 1px solid #ccc;
-  border-radius:5px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 200px;
+   height: calc(100vh - 60px);
+  background-color: black;
+  border-right: 1px solid #ccc;
+  border-radius: 12px;
   padding: 60px;
+  z-index: 1000; /* Ensure it's above other content */
 }
 
 nav.open {
   display: block;
 }
+
 
 ul {
   list-style: none;
@@ -110,6 +122,10 @@ li {
   padding:10px;
   cursor: pointer;
 }
+li:hover{
+cursor: pointer;
+background:#eea1eb;
+}
 
 .content {
  flex-grow: 1;
@@ -120,8 +136,9 @@ li {
 position: fixed;
   bottom: 0;
   width: 100%;
+  left: 0;
+   z-index: 1000;
   padding: 20px;
-  background-color: #c3bef0;
   color: white;
 }
 
