@@ -18,6 +18,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -33,6 +34,7 @@ export default {
       const correctUsername = 'artyabd';
       const correctPassword = '13801122';
       if (this.username === correctUsername && this.password === correctPassword) {
+        this.$store.commit('setUsername', this.username);
       this.$router.push({ path: '/dash', query: { username: this.username } });
       } else {
         // Failed login logic
@@ -48,7 +50,6 @@ export default {
 
 <style scoped>
 .container {
-  background: linear-gradient(to right, rgb(151, 150, 240), rgb(251, 199, 212));
   min-height: 100vh;
   display: flex;
   justify-content: center;

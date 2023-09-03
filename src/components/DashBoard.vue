@@ -4,7 +4,9 @@
     <header class="header">
       <div class="header-content">
         <button class="menu-button" @click="toggleNavigation"><i class="fas fa-bars"></i></button>
-        <div class="username">{{ username }}</div>
+        <div class="username">{{ username }}
+      
+        </div>
       </div>
       <nav :class="{ 'open': isNavigationOpen }">
         <ul>
@@ -14,12 +16,13 @@
           <li>مدیریت فایل ها</li>
         </ul>
       </nav>
+
     </header>
     <main class="content">
-      content
+hi
     </main>
     <footer class="footer">
-     footer
+    
     </footer>
   </div>
 
@@ -27,8 +30,11 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'DashBoard',
+
     data() {
     return {
       isNavigationOpen: true,
@@ -49,6 +55,7 @@ export default {
     closeNavigation() {
       this.isNavigationOpen = false;
     },
+    
   },
 };
 </script>
@@ -141,5 +148,7 @@ position: fixed;
   padding: 20px;
   color: white;
 }
+
+
 
 </style>
