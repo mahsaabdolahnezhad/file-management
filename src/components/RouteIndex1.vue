@@ -2,25 +2,25 @@
   <div class="page-container">
     <div class="frame">
       <div class="table-container">
-          <button class="add-row-button" @click="showAddDialog">Add Row</button>
-         <button class="update-row-button" @click="openEditDialog">Update Rows</button>
-         
+        <button class="add-row-button" @click="showAddDialog">{{ $t('RouteIndex1.addRow') }}</button>
+        <button class="update-row-button" @click="openEditDialog">{{ $t('RouteIndex1.updateRows') }}</button>
+
 
         <div class="scrollable-table">
           <table class="styled-table">
                  <thead>
         <tr>
-         <th>update</th>
-          <th>Username</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Type</th>
-          <th>User Group</th>
-          <th>Creater</th>
-          <th>Creation Time</th>
-          <th>Last Modifier</th>
-          <th>Last Modification Time</th>
-          <th>delete</th>
+       <th>{{ $t('RouteIndex1.update') }}</th>
+                <th>{{ $t('RouteIndex1.username') }}</th>
+                <th>{{ $t('RouteIndex1.firstName') }}</th>
+                <th>{{ $t('RouteIndex1.lastName') }}</th>
+                <th>{{ $t('RouteIndex1.type') }}</th>
+                <th>{{ $t('RouteIndex1.userGroup') }}</th>
+                <th>{{ $t('RouteIndex1.creater') }}</th>
+                <th>{{ $t('RouteIndex1.creationTime') }}</th>
+                <th>{{ $t('RouteIndex1.lastModifier') }}</th>
+                <th>{{ $t('RouteIndex1.lastModificationTime') }}</th>
+                <th>{{ $t('RouteIndex1.delete') }}</th>
          
         </tr>
       </thead>
@@ -55,9 +55,9 @@
     <!-- Add Row Dialog -->
     <div v-if="isAddDialogVisible" class="dialog-overlay">
       <div class="add-dialog">
-        <h2 class="add-dialog-title">Add Row</h2>
+      <h2 class="add-dialog-title">{{ $t('RouteIndex1.addRowTitle') }}</h2>
         <form @submit.prevent="addRow" class="add-form">
-            <label for="username">Username:</label>
+           <label for="username">{{ $t('RouteIndex1.usernameLabel') }}:</label>
           <input
             id="username"
             v-model="rowData.username"
@@ -68,7 +68,7 @@
             class="styled-input"
           />
            <!-- First Name -->
-          <label for="firstname">First Name:</label>
+          <label for="firstname" >{{ $t('RouteIndex1.firstName') }}:</label>
           <input
             id="firstname"
             v-model="rowData.firstname"
@@ -77,7 +77,7 @@
           />
           
           <!-- Last Name -->
-          <label for="lastname">Last Name:</label>
+          <label for="lastname">{{ $t('RouteIndex1.lastName') }}:</label>
           <input
             id="lastname"
             v-model="rowData.lastname"
@@ -86,63 +86,63 @@
           />
           
           <!-- Type -->
-          <label for="type">Type:</label>
+          <label for="type">{{ $t('RouteIndex1.type') }}:</label>
           <select id="type" v-model="rowData.type" required  class="styled-select">
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
+            <option value="admin">{{ $t('RouteIndex1.admin') }}</option>
+            <option value="user">{{ $t('RouteIndex1.user') }}</option>
           </select>
           
           <!-- User Group -->
-          <label for="usergroup">User Group:</label>
+          <label for="usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
           <input
             id="usergroup"
             v-model="rowData.usergroup"
             class="styled-input"
           />
             <div v-if="showWarningMessage" class="warning-message">
-      Username already exists! Please choose a different username.
+    {{ $t('dashboard.usernameExists') }}
     </div>
           <div class="dialog-buttons">
-          <button type="submit" class="dialog-button add-button">Add</button>
-          <button @click="closeAddDialog" class="dialog-button cancel-button">Cancel</button>
+           <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex1.addButton') }}</button>
+                <button @click="closeAddDialog" class="dialog-button cancel-button">{{ $t('RouteIndex1.cancelButton') }}</button>
           </div>
         </form>
       </div>
     </div>
   <div v-if="isEditDialogVisible" class="dialog-overlay">
   <div class="add-dialog">
-    <h2 class="add-dialog-title">Edit Row</h2>
+       <h2 class="add-dialog-title">{{ $t('RouteIndex1.editRowTitle') }}</h2>
     <form @submit.prevent="editRow" class="add-form">
       <!-- Input fields for editing -->
-      <label for="edit-firstname">First Name:</label>
+  <label for="edit-firstname">{{ $t('RouteIndex1.firstName') }}:</label>
       <input
         id="edit-firstname"
         v-model="editedRow.firstname"
         :maxlength="48"
         class="styled-input"
       />
-            <label for="edit-lastname">Last Name:</label>
+<label for="edit-lastname">{{ $t('RouteIndex1.lastName') }}:</label>
       <input
         id="edit-firstname"
         v-model="editedRow.lastname"
         :maxlength="48"
         class="styled-input"
       />
-        <label for="edit-type">Type:</label>
+       <label for="edit-type">{{ $t('RouteIndex1.type') }}:</label>
   <select id="edit-type" v-model="editedRow.type" required  class="styled-select">
-    <option value="admin">Admin</option>
-    <option value="user">User</option>
+    <option value="admin">{{ $t('RouteIndex1.admin') }}</option>
+            <option value="user">{{ $t('RouteIndex1.user') }}</option>
   </select>
   
-  <label for="edit-usergroup">User Group:</label>
+    <label for="edit-usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
   <input
     id="edit-usergroup"
     v-model="editedRow.usergroup"
     class="styled-input"
   />
       <div class="dialog-buttons">
-        <button type="submit" class="dialog-button add-button">Update</button>
-        <button @click="closeEditDialog" class="dialog-button cancel-button">Cancel</button>
+        <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex1.updatebutton') }}</button>
+        <button @click="closeEditDialog" class="dialog-button cancel-button">{{ $t('RouteIndex1.cancelButton') }}</button>
       </div>
     </form>
   </div>
@@ -152,11 +152,11 @@
       <div v-if="confirmDeleteIndex !== null" class="confirmation-message">
       <div class="confirmation-box">
        <div class="confirmation-text">
-          Are you sure you want to delete this row?
+         {{ $t('RouteIndex1.deleteConfirmation') }}
         </div>
         <div class="confirmation-buttons">
-          <button class="confirm" @click="deleteRow(confirmDeleteIndex)">Confirm</button>
-          <button class="cancel" @click="cancelDelete">Cancel</button>
+          <button class="confirm" @click="deleteRow(confirmDeleteIndex)">{{ $t('RouteIndex1.confirm') }}</button>
+          <button class="cancel" @click="cancelDelete">{{ $t('RouteIndex1.deleteConfirmation') }}</button>
         </div>
       </div>
     </div>
@@ -203,7 +203,10 @@ mounted() {
        
     };
   },
-
+ created() {
+    // Emit an event with the usernames
+    this.$emit('.uniqueUsernames', this.getUsernames());
+  },
   methods: {
       clearSessionStorage() {
       // Remove a specific item
@@ -282,7 +285,30 @@ mounted() {
     cancelDelete() {
       this.confirmDeleteIndex = null;
     },
+      selectUsername(username) {
+    this.$root.$emit('userSelected', username);
+  },
+ getUsernames() {
+      // Retrieve the tableData from session storage
+      const tableDataJSON = window.sessionStorage.getItem('tableData');
 
+      // Initialize an empty array to store usernames
+      const usernames = [];
+
+      if (tableDataJSON) {
+        // Parse the tableData JSON
+        const tableData = JSON.parse(tableDataJSON);
+ 
+        // Extract usernames from the tableData
+        tableData.forEach((row) => {
+          if (row.username) {
+            usernames.push(row.username);
+          }
+        });
+      }
+
+      return usernames;
+    },
     deleteRow(index) {
       this.tableData.splice(index, 1);
 
@@ -328,6 +354,8 @@ mounted() {
 
        const dataToSave = JSON.stringify(this.tableData); // Convert your data to a JSON string
   window.sessionStorage.setItem('tableData', dataToSave);
+   this.$emit('.uniqueUsernames', this.getUsernames());
+
     },
          validateForm() {
       let isValid = true;
@@ -353,6 +381,7 @@ mounted() {
         usergroup: ''
       };
     }
+    
   }
 };
 </script>

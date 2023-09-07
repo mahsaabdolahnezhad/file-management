@@ -1,7 +1,7 @@
 <template>
  <div id="app" :class="selectedTheme">
-    <router-view/>
-     <ThemeSwitcher v-if="$route.name === 'Dashboard'" @theme-changed="changeTheme" />
+  <router-view :key="$route.fullPath" :selectedTheme="selectedTheme" />
+    <ThemeSwitcher v-if="$route.name === 'Dashboard'"  :initialTheme="selectedTheme" @theme-changed="changeTheme" />
   </div>
 </template>
 
@@ -18,10 +18,30 @@ export default {
       selectedTheme: 'theme-purple', // Default theme
     };
   },
+    created() {
+    // Retrieve the logged-in user
+    const loggedInUser = localStorage.getItem('virtualLoggedInUser');
+    if (loggedInUser) {
+      // Retrieve the selected theme for the logged-in user from localStorage
+      const userTheme = localStorage.getItem(`${loggedInUser}_theme`);
+      if (userTheme) {
+        // Apply the selected theme globally
+        this.selectedTheme = userTheme;
+      }
+
+     
+    }
+  },
   methods: {
     changeTheme(theme) {
       // Update the selected theme globally
+     // Update the selected theme globally
       this.selectedTheme = theme;
+  // Save the selected theme in localStorage for the current user
+      const loggedInUser = localStorage.getItem('virtualLoggedInUser');
+      if (loggedInUser) {
+        localStorage.setItem(`${loggedInUser}_theme`, theme);
+      }
     },
   },
 };

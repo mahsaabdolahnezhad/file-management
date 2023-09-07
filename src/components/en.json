@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "userManagement": "User Management",
+    "manageUserGroups": "Manage User Groups",
+    "storageSpace": "Storage Space",
+    "fileManagement": "File Management",
+    "selectLanguage": "Select a Language:",
+    "english": "English",
+    "persian": "Persian"
+  },
+  "themeSwitcher": {
+    "selectTheme": "Select a Theme:",
+    "defaultTheme": "Default (Purple)",
+    "blueTheme": "Blue",
+    "greenTheme": "Green",
+    "redTheme": "Red"
+  },
+  "RouteIndex1": {
+    "addRow": "Add Row",
+    "updateRows": "Update Rows",
+    "addRowTitle": "Add Row",
+    "usernameLabel": "Username",
+    "usernameExists": "Username already exists! Please choose a different username.",
+    "addButton": "Add",
+    "cancelButton": "Cancel",
+    "updatebutton": "Update",
+    "update": "Update",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "type": "Type",
+    "user":"user",
+    "admin":"admin",
+    "userGroup": "User Group",
+    "creater": "Creater",
+    "creationTime": "Creation Time",
+    "lastModifier": "Last Modifier",
+    "lastModificationTime": "Last Modification Time",
+    "delete": "Delete",
+    "editRowTitle": "Edit Row",
+    "addRowDialogTitle": "Add Row",
+    "cancel": "Cancel",
+    "add": "Add",
+    "deleteConfirmation": "Are you sure you want to delete this row?",
+    "confirm": "Confirm",
+    "cancelDelete": "Cancel"
+  }
+}

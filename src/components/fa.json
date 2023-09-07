@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "userManagement": "مدیریت کاربران",
+    "manageUserGroups": "مدیریت گروه‌های کاربری",
+    "storageSpace": "فضای ذخیره‌سازی",
+    "fileManagement": "مدیریت فایل‌ها",
+    "selectLanguage": "انتخاب زبان:",
+    "english": "انگلیسی",
+    "persian": "فارسی"
+  },
+  "themeSwitcher": {
+    "selectTheme": "انتخاب تم:",
+    "defaultTheme": "پیش‌فرض (بنفش)",
+    "blueTheme": "آبی",
+    "greenTheme": "سبز",
+    "redTheme": "قرمز"
+  },
+  "RouteIndex1": {
+    "addRow": "افزودن ردیف",
+    "updateRows": "به‌روزرسانی ردیف‌ها",
+    "addRowTitle": "افزودن ردیف",
+    "usernameLabel": "نام کاربری",
+    "usernameExists": "نام کاربری از قبل وجود دارد! لطفاً نام کاربری دیگری انتخاب کنید.",
+    "addButton": "افزودن",
+    "cancelButton": "انصراف",
+    "updatebutton": "به روز رسانی",
+    "update": "به‌روزرسانی",
+    "username": "نام کاربری",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "type": "نوع",
+    "userGroup": "گروه کاربری",
+    "creater": "سازنده",
+    "creationTime": "زمان ایجاد",
+    "lastModifier": "ویرایش‌کننده آخرین تغییرات",
+    "lastModificationTime": "زمان آخرین تغییرات",
+    "user": "کاربر",
+    "admin": "ادمین",
+    "delete": "حذف",
+    "editRowTitle": "ویرایش ردیف",
+    "addRowDialogTitle": "افزودن ردیف",
+    "cancel": "لغو",
+    "add": "افزودن",
+    "deleteConfirmation": "آیا از حذف این ردیف مطمئن هستید؟",
+    "confirm": "تأیید",
+    "cancelDelete": "لغو حذف"
+  }
+}

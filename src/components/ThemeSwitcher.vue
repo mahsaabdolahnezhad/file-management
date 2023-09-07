@@ -1,27 +1,45 @@
 <!-- ThemeSwitcher.vue -->
 <template>
-  <div  class="theme-selector-container">
-    <label for="theme-selector">Select a Theme:</label>
+ <div class="theme-selector-container">
+    <label for="theme-selector">{{ $t('themeSwitcher.selectTheme') }}</label>
     <select id="theme-selector" v-model="selectedTheme" @change="handleThemeChange(selectedTheme)">
-      <option value="theme-purple"  class="theme-option">Default (Purple)</option>
-      <option value="theme-blue"  class="theme-option">Blue</option>
-      <option value="theme-green"  class="theme-option">Green</option>
-      <option value="theme-red"  class="theme-option">Red</option>
+      <option value="theme-purple" class="theme-option">
+        <div class="theme-preview" style="background-color: purple;"></div>
+        {{ $t('themeSwitcher.defaultTheme') }}
+      </option>
+      <option value="theme-blue" class="theme-option">
+        <div class="theme-preview" style="background-color: blue;"></div>
+        {{ $t('themeSwitcher.blueTheme') }}
+      </option>
+      <option value="theme-green" class="theme-option">
+        <div class="theme-preview" style="background-color: green;"></div>
+        {{ $t('themeSwitcher.greenTheme') }}
+      </option>
+      <option value="theme-red" class="theme-option">
+        <div class="theme-preview" style="background-color: red;"></div>
+        {{ $t('themeSwitcher.redTheme') }}
+      </option>
     </select>
   </div>
 </template>
 
 <script>
 export default {
+    props: {
+    initialTheme: String, // Pass the initial theme as a prop
+  },
   data() {
     return {
-      selectedTheme: 'theme-purple', // Default theme
+     selectedTheme: this.initialTheme, 
     };
   },
-  methods: {
+methods: {
     handleThemeChange(theme) {
       // Emit the selected theme to the parent component
+     // Emit the selected theme to the parent component
       this.$emit('theme-changed', theme);
+    
+
     },
   },
 };
@@ -53,15 +71,19 @@ export default {
 }
 /* Style the options */
 #theme-selector option {
-  background-color: white;
+  background-color: rgb(209, 151, 190);
   color: black;
   font-size: 14px;
   padding: 5px;
 }
+#theme-selector option :hover {
+  background-color: #eea1eb ; 
+}
+
 
 /* Style the selected option */
 #theme-selector option:checked {
-  background-color: #007bff; /* Example color */
+  background-color: #eea1eb ; 
   color: black;
 }
 
