@@ -73,7 +73,7 @@ background: linear-gradient(to right, rgb(151, 150, 240), rgb(251, 199, 212));
 
 
 .theme-blue {
- background: radial-gradient(circle at 10% 20%, rgb(0, 107, 141) 0%, rgb(0, 69, 91) 90%);
+background: radial-gradient(circle at 22.4% 21.7%, rgb(4, 189, 228) 0%, rgb(2, 83, 185) 100.2%);
 }
 
 .theme-green {
@@ -81,7 +81,7 @@ background: radial-gradient(circle at -1% 57.5%, rgb(19, 170, 82) 0%, rgb(0, 102
 }
 
 .theme-red {
-background: radial-gradient(circle at 10% 20%, rgb(221, 49, 49) 0%, rgb(119, 0, 0) 90%);
+background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%);
 }
 
 </style>

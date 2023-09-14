@@ -44,5 +44,33 @@
     "deleteConfirmation": "آیا از حذف این ردیف مطمئن هستید؟",
     "confirm": "تأیید",
     "cancelDelete": "لغو حذف"
+  },
+    "RouteIndex2": {
+      "name":"نام",
+    "addRow": "افزودن ردیف",
+    "updateRows": "به‌روزرسانی ردیف‌ها",
+    "addRowTitle": "افزودن ردیف",
+    "usernameLabel": "نام کاربری",
+    "usernameExists": "نام کاربری از قبل وجود دارد! لطفاً نام کاربری دیگری انتخاب کنید.",
+    "addButton": "افزودن",
+    "cancelButton": "انصراف",
+    "updatebutton": "به روز رسانی",
+    "update": "به‌روزرسانی",
+    "username": "نام کاربری",
+    "userGroup": "گروه کاربری",
+    "creator": "سازنده",
+    "creationTime": "زمان ایجاد",
+    "lastModifier": "ویرایش‌کننده آخرین تغییرات",
+    "lastModificationTime": "زمان آخرین تغییرات",
+    "user": "کاربر",
+    "admin": "ادمین",
+    "delete": "حذف",
+    "editRowTitle": "ویرایش ردیف",
+    "addRowDialogTitle": "افزودن ردیف",
+    "cancel": "لغو",
+    "add": "افزودن",
+    "deleteConfirmation": "آیا از حذف این ردیف مطمئن هستید؟",
+    "confirm": "تأیید",
+    "cancelDelete": "لغو حذف"
   }
 }

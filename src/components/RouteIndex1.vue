@@ -94,11 +94,9 @@
           
           <!-- User Group -->
           <label for="usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
-          <input
-            id="usergroup"
-            v-model="rowData.usergroup"
-            class="styled-input"
-          />
+ <select id="usergroup" v-model="rowData.usergroup" class="styled-select">
+    <option v-for="name in namesFromRoute2" :value="name" :key="name">{{ name }}</option>
+  </select>
             <div v-if="showWarningMessage" class="warning-message">
     {{ $t('dashboard.usernameExists') }}
     </div>
@@ -135,11 +133,9 @@
   </select>
   
     <label for="edit-usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
-  <input
-    id="edit-usergroup"
-    v-model="editedRow.usergroup"
-    class="styled-input"
-  />
+<select id="usergroup" v-model="editedRow.usergroup" class="styled-select">
+  <option v-for="name in namesFromRoute2" :value="name" :key="name">{{ name }}</option>
+</select>
       <div class="dialog-buttons">
         <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex1.updatebutton') }}</button>
         <button @click="closeEditDialog" class="dialog-button cancel-button">{{ $t('RouteIndex1.cancelButton') }}</button>
@@ -156,7 +152,7 @@
         </div>
         <div class="confirmation-buttons">
           <button class="confirm" @click="deleteRow(confirmDeleteIndex)">{{ $t('RouteIndex1.confirm') }}</button>
-          <button class="cancel" @click="cancelDelete">{{ $t('RouteIndex1.deleteConfirmation') }}</button>
+          <button class="cancel" @click="cancelDelete">{{ $t('RouteIndex1.cancel') }}</button>
         </div>
       </div>
     </div>
@@ -164,18 +160,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState , mapActions , mapMutations } from 'vuex';
 export default {
-mounted() {
-    // Load data from session storage
-    const data = window.sessionStorage.getItem('tableData');
 
-    if (data) {
-      this.tableData = JSON.parse(data); // Parse the JSON string back to an object
-    }
-  },
  computed: {
-    ...mapState(['username']), // Map the shared username from the store
+    ...mapState(['username' ,]), 
+  
   },
   data() {
     return {
@@ -199,22 +189,29 @@ mounted() {
       isAddDialogVisible: false,
        confirmDeleteIndex: null,
         uniqueUsernames: new Set(),
-        showWarningMessage: false
+        showWarningMessage: false,
+          
        
     };
   },
  created() {
     // Emit an event with the usernames
     this.$emit('.uniqueUsernames', this.getUsernames());
+   const tableDataJSON = window.sessionStorage.getItem('tableData');
+  if (tableDataJSON) {
+    const tableData = JSON.parse(tableDataJSON);
+    this.tableData = tableData; // Initialize tableData with the loaded data
+  } else {
+    this.tableData = this.$store.state.tableData; // Initialize with Vuex data if session storage is empty
+  }
+
+
   },
   methods: {
-      clearSessionStorage() {
-      // Remove a specific item
-      window.sessionStorage.removeItem('tableData');
-      
-      // OR clear all session storage
-      // window.sessionStorage.clear();
-    },
+     ...mapMutations(['setTableData']),
+      ...mapActions(['setUsernames']),
+  
+
  selectRow(index) {
   // Deselect all rows
   this.tableData.forEach((row) => {
@@ -259,11 +256,10 @@ mounted() {
     selectedRow.lastname = this.editedRow.lastname;
     selectedRow.type = this.editedRow.type;
     selectedRow.usergroup = this.editedRow.usergroup;
-    selectedRow.lastModifier = this.username;
+    selectedRow.lastModifier = this.selectedUsername;
     selectedRow.lastModificationTime = currentTime;
 
-
-   sessionStorage.setItem('tableData', JSON.stringify(this.tableData));
+    this.setTableData(this.tableData);
     // Close the edit dialog and reset data
     this.closeEditDialog();
     }
@@ -280,6 +276,7 @@ mounted() {
   },
   confirmDelete(index) {
       this.confirmDeleteIndex = index;
+     
     },
 
     cancelDelete() {
@@ -312,8 +309,8 @@ mounted() {
     deleteRow(index) {
       this.tableData.splice(index, 1);
 
-       sessionStorage.setItem('tableData', JSON.stringify(this.tableData));
       this.confirmDeleteIndex = null;
+        this.setTableData(this.tableData);
     },
     showAddDialog() {
       this.isAddDialogVisible = true;
@@ -349,13 +346,22 @@ mounted() {
         this.uniqueUsernames.add(newUsername);
       // Add the new row to the tableData array
       this.tableData.push(newRow);
-
+    this.setTableData(this.tableData);
       this.closeAddDialog();
 
-       const dataToSave = JSON.stringify(this.tableData); // Convert your data to a JSON string
-  window.sessionStorage.setItem('tableData', dataToSave);
    this.$emit('.uniqueUsernames', this.getUsernames());
+     this.setUsernames(this.getUsernames());
 
+    },
+      initializeTableData() {
+      // Try loading data from session storage
+      const tableDataJSON = window.sessionStorage.getItem('tableData');
+      if (tableDataJSON) {
+        const tableData = JSON.parse(tableDataJSON);
+        this.setTableData(tableData);
+      } else {
+        this.setTableData([]); // Initialize with an empty array if not available
+      }
     },
          validateForm() {
       let isValid = true;
@@ -385,6 +391,9 @@ mounted() {
   }
 };
 </script>
+
+
+
 <style>
 .page-container {
   display: flex;
@@ -681,7 +690,6 @@ mounted() {
 }
 
 </style>
-
 
 
 

@@ -1,6 +1,6 @@
 <!-- src/components/DashBoard.vue -->
 <template>
- <div class="container"  :class="selectedTheme">
+ <div class="container" >
     <header class="header">
       <div class="header-content">
         <button class="menu-button" @click="toggleNavigation"><i class="fas fa-bars"></i></button>
