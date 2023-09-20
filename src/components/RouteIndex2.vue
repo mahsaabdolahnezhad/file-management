@@ -2,29 +2,39 @@
   <div class="page-container">
     <div class="frame">
       <div class="table-container">
-               <button class="add-row-button" @click="showAddDialog">{{ $t('RouteIndex2.addRow') }}</button>
-        <button class="update-row-button" @click="openEditDialog">{{ $t('RouteIndex2.updateRows') }}</button>
+        <button class="add-row-button" @click="showAddDialog">
+          {{ $t("RouteIndex2.addRow") }}
+        </button>
+        <button class="update-row-button" @click="openEditDialog">
+          {{ $t("RouteIndex2.updateRows") }}
+        </button>
 
         <div class="scrollable-table">
           <table class="styled-table">
             <thead>
               <tr>
-                <th>{{ $t('RouteIndex2.update') }}</th>
-                <th>{{ $t('RouteIndex2.name') }}</th>
-                <th>{{ $t('RouteIndex2.user') }}</th>
-                <th>{{ $t('RouteIndex2.creator') }}</th>
-                <th>{{ $t('RouteIndex2.creationTime') }}</th>
-                <th>{{ $t('RouteIndex2.lastModifier') }}</th>
-                <th>{{ $t('RouteIndex2.lastModificationTime') }}</th>
-                <th>{{ $t('RouteIndex2.delete') }}</th>
+                <th>{{ $t("RouteIndex2.update") }}</th>
+                <th>{{ $t("RouteIndex2.name") }}</th>
+                <th>{{ $t("RouteIndex2.user") }}</th>
+                <th>{{ $t("RouteIndex2.creator") }}</th>
+                <th>{{ $t("RouteIndex2.creationTime") }}</th>
+                <th>{{ $t("RouteIndex2.lastModifier") }}</th>
+                <th>{{ $t("RouteIndex2.lastModificationTime") }}</th>
+                <th>{{ $t("RouteIndex2.delete") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(row, index) in tableData2" :key="index">
-                    <div class="checkbox-container">
-          
-                <td ><input type="checkbox" v-model="row.selected"  class="checkbox-input" :checked="index === selectedRowIndex"  @click="selectRow(index)"/></td>
-
+                <div class="checkbox-container">
+                  <td>
+                    <input
+                      type="checkbox"
+                      v-model="row.selected"
+                      class="checkbox-input"
+                      :checked="index === selectedRowIndex"
+                      @click="selectRow(index)"
+                    />
+                  </td>
                 </div>
                 <td>{{ row.name }}</td>
                 <td>{{ row.user }}</td>
@@ -44,13 +54,13 @@
       </div>
     </div>
 
-     <!-- Add Row Dialog -->
+    <!-- Add Row Dialog -->
     <div v-if="isAddDialogVisible" class="dialog-overlay">
       <div class="add-dialog">
-        <h2 class="add-dialog-title">{{ $t('RouteIndex2.addRowTitle') }}</h2>
+        <h2 class="add-dialog-title">{{ $t("RouteIndex2.addRowTitle") }}</h2>
         <form @submit.prevent="addRow" class="add-form">
           <!-- Name -->
-          <label for="name">{{ $t('RouteIndex2.name') }}:</label>
+          <label for="name">{{ $t("RouteIndex2.name") }}:</label>
           <input
             id="name"
             v-model="rowData.name"
@@ -60,100 +70,127 @@
             class="styled-input"
             :disabled="editing"
           />
-      <!-- User (Multi-select) -->
-<label for="user">{{ $t('RouteIndex2.user') }}:</label>
-<select id="user" v-model="rowData.user" multiple class="styled-selects">
-  <option v-for="(username, index) in usernames" :value="username" :key="index">{{ username }}</option>
-</select>
+          <!-- User (Multi-select) -->
+          <label for="user">{{ $t("RouteIndex2.user") }}:</label>
+          <select
+            id="user"
+            v-model="rowData.user"
+            multiple
+            class="styled-selects"
+          >
+            <option
+              v-for="(username, index) in usernames"
+              :value="username"
+              :key="index"
+            >
+              {{ username }}
+            </option>
+          </select>
 
           <div class="dialog-buttons">
-            <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex2.addButton') }}</button>
-            <button @click="closeAddDialog" class="dialog-button cancel-button">{{ $t('RouteIndex2.cancelButton') }}</button>
+            <button type="submit" class="dialog-button add-button">
+              {{ $t("RouteIndex2.addButton") }}
+            </button>
+            <button @click="closeAddDialog" class="dialog-button cancel-button">
+              {{ $t("RouteIndex2.cancelButton") }}
+            </button>
           </div>
         </form>
       </div>
     </div>
-  <!-- Edit Row Dialog -->
-  <div v-if="isEditDialogVisible" class="dialog-overlay">
-    <div class="add-dialog">
-      <h2 class="add-dialog-title">{{ $t('RouteIndex2.editRowTitle') }}</h2>
-      <form @submit.prevent="editRow" class="add-form">
-        <!-- Name (Unchangeable) -->
-        <label for="edit-name">{{ $t('RouteIndex2.name') }}:</label>
-        <input
-          id="edit-name"
-          v-model="editedRow.name"
-          :disabled="true"
-          class="styled-input"
-        />
-        <!-- User (Changeable) -->
+    <!-- Edit Row Dialog -->
+    <div v-if="isEditDialogVisible" class="dialog-overlay">
+      <div class="add-dialog">
+        <h2 class="add-dialog-title">{{ $t("RouteIndex2.editRowTitle") }}</h2>
+        <form @submit.prevent="editRow" class="add-form">
+          <!-- Name (Unchangeable) -->
+          <label for="edit-name">{{ $t("RouteIndex2.name") }}:</label>
+          <input
+            id="edit-name"
+            v-model="editedRow.name"
+            :disabled="true"
+            class="styled-input"
+          />
+          <!-- User (Changeable) -->
 
-        
-        <label for="edit-user">{{ $t('RouteIndex2.user') }}:</label>
-        <select
-          id="edit-user"
-          v-model="editedRow.user"
-          multiple
-          class="styled-selects"
-        >
-          <option v-for="(username, index) in usernames" :value="username" :key="index">{{ username }}</option>
-        </select>
-        <div class="dialog-buttons">
-          <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex2.updatebutton') }}</button>
-          <button @click="closeEditDialog" class="dialog-button cancel-button">{{ $t('RouteIndex2.cancelButton') }}</button>
-        </div>
-      </form>
+          <label for="edit-user">{{ $t("RouteIndex2.user") }}:</label>
+          <select
+            id="edit-user"
+            v-model="editedRow.user"
+            multiple
+            class="styled-selects"
+          >
+            <option
+              v-for="(username, index) in usernames"
+              :value="username"
+              :key="index"
+            >
+              {{ username }}
+            </option>
+          </select>
+          <div class="dialog-buttons">
+            <button type="submit" class="dialog-button add-button">
+              {{ $t("RouteIndex2.updatebutton") }}
+            </button>
+            <button
+              @click="closeEditDialog"
+              class="dialog-button cancel-button"
+            >
+              {{ $t("RouteIndex2.cancelButton") }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-
-
 
     <!-- Delete Confirmation Dialog -->
     <div v-if="confirmDeleteIndex !== null" class="confirmation-message">
       <div class="confirmation-box">
         <div class="confirmation-text">
-          {{ $t('RouteIndex2.deleteConfirmation') }}
+          {{ $t("RouteIndex2.deleteConfirmation") }}
         </div>
         <div class="confirmation-buttons">
-          <button class="confirm" @click="deleteRow(confirmDeleteIndex)">{{ $t('RouteIndex2.confirm') }}</button>
-          <button class="cancel" @click="cancelDelete">{{ $t('RouteIndex2.cancel') }}</button>
+          <button class="confirm" @click="deleteRow(confirmDeleteIndex)">
+            {{ $t("RouteIndex2.confirm") }}
+          </button>
+          <button class="cancel" @click="cancelDelete">
+            {{ $t("RouteIndex2.cancel") }}
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-import { mapState , } from 'vuex';
-import store from '@/store'; 
+import { mapState } from "vuex";
+import store from "@/store";
 export default {
-
- computed: {
-    ...mapState(['username']), 
-     ...mapState(['usernames']),
+  computed: {
+    ...mapState(["username"]),
+    ...mapState(["usernames"]),
   },
-  
+
   watch: {
-    // Watch for changes in tableData and update usernames
     tableData2: {
       handler() {
-        this.updateUsernames();
+        this.updateNamesData();
+        this.updateUsersData();
       },
       deep: true,
     },
   },
- data() {
+  data() {
     return {
       selectedRowIndex: -1,
       isEditDialogVisible: false,
-         enteredNames: [],
+      enteredNames: [],
       editedRow: {
-        name: '',
+        name: "",
         user: [],
       },
       rowData: {
-        name: '',
+        name: "",
         user: [],
       },
       tableData2: [],
@@ -164,57 +201,69 @@ export default {
     };
   },
 
- created() {
-this.usernames = this.$store.state.usernames; 
-   const tableData2FromStorage = JSON.parse(sessionStorage.getItem('tableData2'));
+  created() {
+    this.usernames = this.$store.state.usernames;
+    const tableData2FromStorage = JSON.parse(
+      sessionStorage.getItem("tableData2")
+    );
     if (tableData2FromStorage) {
       this.tableData2 = tableData2FromStorage;
     }
-
+     
   },
   methods: {
-     
-     updateUsernames() {
+    updateNamesData() {
+      const names = this.tableData2.map((row) => row.name);
+      this.$store.commit("setNamesFromRoute2", names);
+    },
+
+    // Set usernames data in the store
+    updateUsersData() {
+      const username = this.tableData2.map((row) => row.user);
+      this.$store.commit("setUsername", username);
+    },
+
+    updateUsernames() {
       // Extract usernames from the updated tableData array
-      const usernames = this.tableData2.map(row => row.username);
+      const usernames = this.tableData2.map((row) => row.username);
       this.usernames = Array.from(new Set(usernames)); // Update the computed property
     },
 
- selectRow(index) {
-  // Deselect all rows
-  this.tableData2.forEach((row) => {
-    row.selected = false;
-  });
+    selectRow(index) {
+      // Deselect all rows
+      this.tableData2.forEach((row) => {
+        row.selected = false;
+      });
 
-  // Select the clicked row
-  this.tableData2[index].selected = true;
+      // Select the clicked row
+      this.tableData2[index].selected = true;
 
-  // Update the selectedRowIndex
-  this.selectedRowIndex = index;
-},
+      // Update the selectedRowIndex
+      this.selectedRowIndex = index;
+    },
 
-   openEditDialog() {
-    // Find the index of the first selected row
-    const selectedIndex = this.tableData2.findIndex((row) => row.selected);
+    openEditDialog() {
+      // Find the index of the first selected row
+      const selectedIndex = this.tableData2.findIndex((row) => row.selected);
 
-    if (selectedIndex !== -1) {
-      // Store the selected row's index and data for editing
-      this.selectedRowIndex = selectedIndex;
-      this.editedRow = { ...this.tableData2[selectedIndex] };
+      if (selectedIndex !== -1) {
+        // Store the selected row's index and data for editing
+        this.selectedRowIndex = selectedIndex;
+        this.editedRow = { ...this.tableData2[selectedIndex] };
 
-      // Show the edit dialog
-      this.isEditDialogVisible = true;
-    }
-  },
+        // Show the edit dialog
+        this.isEditDialogVisible = true;
+      }
+    },
 
-  closeEditDialog() {
-    // Close the edit dialog and reset data
-    this.isEditDialogVisible = false;
-    this.selectedRowIndex = null;
-    this.clearEditFields();
-  },
+    closeEditDialog() {
+      // Close the edit dialog and reset data
+      this.isEditDialogVisible = false;
+      this.selectedRowIndex = null;
+      this.clearEditFields();
+    },
 
-   editRow() {
+    editRow() {
       if (this.selectedRowIndex !== -1) {
         const currentTime = new Date();
 
@@ -224,21 +273,21 @@ this.usernames = this.$store.state.usernames;
         selectedRow.lastModifier = this.username;
         selectedRow.lastModificationTime = currentTime;
 
-         store.dispatch('setTableData', this.tableData2);
+        store.dispatch("setTableData", this.tableData2);
 
         // Close the edit dialog and reset data
         this.closeEditDialog();
       }
     },
 
-   clearEditFields() {
+    clearEditFields() {
       // Reset the edited row's data
       this.editedRow = {
-        name: '',
+        name: "",
         user: [],
       };
     },
-  confirmDelete(index) {
+    confirmDelete(index) {
       this.confirmDeleteIndex = index;
     },
 
@@ -246,14 +295,12 @@ this.usernames = this.$store.state.usernames;
       this.confirmDeleteIndex = null;
     },
 
-
     deleteRow(index) {
       this.tableData2.splice(index, 1);
 
-
       this.confirmDeleteIndex = null;
-        
-       store.dispatch('setTableData', this.tableData2);
+
+      store.dispatch("setTableData", this.tableData2);
     },
     showAddDialog() {
       this.isAddDialogVisible = true;
@@ -262,7 +309,7 @@ this.usernames = this.$store.state.usernames;
       this.isAddDialogVisible = false;
       this.clearInputFields();
     },
-    
+
     addRow() {
       // Validate form inputs
       if (!this.validateForm()) {
@@ -285,42 +332,39 @@ this.usernames = this.$store.state.usernames;
         lastModifier: this.username,
         lastModificationTime: new Date(),
       };
-      
 
       // Add the new row to the tableData array
       this.tableData2.push(newRow);
 
-       store.dispatch('setTableData', this.tableData2);
+      store.dispatch("setTableData", this.tableData2);
 
       this.closeAddDialog();
     },
- 
 
     validateForm() {
       let isValid = true;
 
-      if (!this.rowData.name || this.rowData.name.length < 5 || this.rowData.name.length > 48) {
+      if (
+        !this.rowData.name ||
+        this.rowData.name.length < 5 ||
+        this.rowData.name.length > 48
+      ) {
         // Invalid name
         isValid = false;
       }
 
       return isValid;
     },
-    
 
     clearInputFields() {
       this.rowData = {
-        name: '',
+        name: "",
         user: [],
       };
     },
   },
 };
 </script>
-
-
-
-
 
 <style>
 .page-container {
@@ -580,7 +624,6 @@ this.usernames = this.$store.state.usernames;
   color: #fff;
 }
 
-
 .warning-message {
   color: #e74c3c;
   margin-top: 10px;
@@ -590,7 +633,7 @@ this.usernames = this.$store.state.usernames;
 .add-form {
   display: flex;
   flex-direction: column;
-  padding: 40px;;
+  padding: 40px;
 }
 
 /* Checkbox styling */
@@ -643,9 +686,4 @@ this.usernames = this.$store.state.usernames;
   align-items: center;
   z-index: 999;
 }
-
 </style>
-
-
-
-

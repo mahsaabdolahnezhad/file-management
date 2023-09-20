@@ -94,11 +94,12 @@
           
           <!-- User Group -->
           <label for="usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
- <select id="usergroup" v-model="rowData.usergroup" class="styled-select">
-    <option v-for="name in namesFromRoute2" :value="name" :key="name">{{ name }}</option>
-  </select>
+<select id="usergroup" v-model="rowData.usergroup" class="styled-select">
+  <option v-for="name in namesFromRoute2" :value="name" :key="name">{{ name }}</option>
+</select>
+
             <div v-if="showWarningMessage" class="warning-message">
-    {{ $t('dashboard.usernameExists') }}
+    {{ $t('RoueIndex1.usernameExists') }}
     </div>
           <div class="dialog-buttons">
            <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex1.addButton') }}</button>
@@ -161,10 +162,17 @@
 
 <script>
 import { mapState , mapActions , mapMutations } from 'vuex';
+
 export default {
 
  computed: {
     ...mapState(['username' ,]), 
+     namesFromRoute2() {
+    return this.$store.state.namesFromRoute2;
+  },
+  usernamesFromRoute2() {
+    return this.$store.state.username;
+  },
   
   },
   data() {
@@ -190,14 +198,14 @@ export default {
        confirmDeleteIndex: null,
         uniqueUsernames: new Set(),
         showWarningMessage: false,
-          
+     selectedUser: '',
        
     };
   },
- created() {
-    // Emit an event with the usernames
-    this.$emit('.uniqueUsernames', this.getUsernames());
-   const tableDataJSON = window.sessionStorage.getItem('tableData');
+ 
+created() {
+  // Try loading data from session storage
+  const tableDataJSON = window.sessionStorage.getItem('tableData');
   if (tableDataJSON) {
     const tableData = JSON.parse(tableDataJSON);
     this.tableData = tableData; // Initialize tableData with the loaded data
@@ -205,8 +213,14 @@ export default {
     this.tableData = this.$store.state.tableData; // Initialize with Vuex data if session storage is empty
   }
 
+  // Emit an event with the usernames
+  this.$emit('.uniqueUsernames', this.getUsernames());
+  
+  
+},
 
-  },
+
+
   methods: {
      ...mapMutations(['setTableData']),
       ...mapActions(['setUsernames']),
@@ -256,10 +270,11 @@ export default {
     selectedRow.lastname = this.editedRow.lastname;
     selectedRow.type = this.editedRow.type;
     selectedRow.usergroup = this.editedRow.usergroup;
-    selectedRow.lastModifier = this.selectedUsername;
+    selectedRow.lastModifier = this.user;
     selectedRow.lastModificationTime = currentTime;
 
     this.setTableData(this.tableData);
+
     // Close the edit dialog and reset data
     this.closeEditDialog();
     }
@@ -276,7 +291,7 @@ export default {
   },
   confirmDelete(index) {
       this.confirmDeleteIndex = index;
-     
+      
     },
 
     cancelDelete() {
@@ -310,7 +325,7 @@ export default {
       this.tableData.splice(index, 1);
 
       this.confirmDeleteIndex = null;
-        this.setTableData(this.tableData);
+         this.setTableData(this.tableData);
     },
     showAddDialog() {
       this.isAddDialogVisible = true;
@@ -348,7 +363,7 @@ export default {
       this.tableData.push(newRow);
     this.setTableData(this.tableData);
       this.closeAddDialog();
-
+ 
    this.$emit('.uniqueUsernames', this.getUsernames());
      this.setUsernames(this.getUsernames());
 
@@ -391,6 +406,9 @@ export default {
   }
 };
 </script>
+
+
+
 
 
 
@@ -688,6 +706,7 @@ export default {
   align-items: center;
   z-index: 999;
 }
+
 
 </style>
 

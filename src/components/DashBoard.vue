@@ -13,8 +13,8 @@
    <ul>
           <li @click="navigateToRoute('RouteIndex1')">{{ $t('dashboard.userManagement') }}</li>
           <li @click="navigateToRoute('RouteIndex2')">{{ $t('dashboard.manageUserGroups') }}</li>
-          <li>{{ $t('dashboard.storageSpace') }}</li>
-          <li>{{ $t('dashboard.fileManagement') }}</li>
+          <li @click="navigateToRoute('RouteIndex3')">{{ $t('dashboard.storageSpace') }}</li>
+          <li @click="navigateToRoute('RouteIndex4')">{{ $t('dashboard.fileManagement') }}</li>
         </ul>
         </ul>
    <select v-model="selectedUsername" @change="virtualLogin"  class="select-box">
@@ -118,7 +118,6 @@ export default {
   if (selectedUsername) {
     this.username = selectedUsername;
 
-    // Retrieve and apply the saved language preference for the selected user
 
    const userLanguage = localStorage.getItem(`${selectedUsername}_language`);
         if (userLanguage) {
@@ -133,6 +132,8 @@ export default {
           this.localSelectedTheme = userTheme; // Update the local data property
         }
     // Save the selected username in localStorage
+     this.$root.$emit('userSelected', selectedUsername);
+
     localStorage.setItem('virtualLoggedInUser', selectedUsername);
   }
     },

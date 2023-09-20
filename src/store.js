@@ -6,9 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     username: "",
+    
     usernames: [],
     tableData: [],
     tableData2: [],
+    namesFromRoute2: [],
   },
   mutations: {
     setUsername(state, username) {
@@ -25,7 +27,10 @@ export default new Vuex.Store({
     },
     SET_TABLE_DATA(state, data) {
       state.tableData2 = data;
-        sessionStorage.setItem("tableData", JSON.stringify(data));
+      sessionStorage.setItem("tableData2", JSON.stringify(data));
+    },
+    setNamesFromRoute2(state, names) {
+      state.namesFromRoute2 = names;
     },
   },
   actions: {
