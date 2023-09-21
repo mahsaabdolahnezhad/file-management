@@ -1,5 +1,6 @@
 <template>
   <div class="file-management">
+     <h1>User Management for {{ username }}</h1>
     <h2>File Management</h2>
     <div class="current-path">Current Path: {{ currentPath }}</div>
     <div class="actions">
@@ -11,15 +12,24 @@
       <div class="upload-file">
         <input type="file" ref="fileInput" @change="uploadFiles" multiple />
       </div>
-       <div  class="button-group">
       <div class="file-actions">
-        <button @click="copySelectedFiles">Copy</button>
-        <button @click="moveSelectedFiles">Move</button>
-        <button @click="deleteSelectedFiles">Delete</button>
-         <button @click="downloadSelectedFiles">Download</button>
-      </div>
+        <button class="action-button copy-button" @click="copySelectedFiles">Copy</button>
+        <button class="action-button move-button" @click="moveSelectedFiles">Move</button>
+        <button class="action-button delete-button" @click="deleteSelectedFiles">Delete</button>
+        <button class="action-button download-button" @click="downloadSelectedFiles">Download</button>
+       <button id="shareButton" @click="openShareDialog">Share</button>
+
       </div>
     </div>
+   <!-- Add this code below the "Share" button -->
+<div class="share-dialog-overlay" v-if="showShareDialog">
+  <div class="share-dialog">
+    <h3>Share Files</h3>
+    <!-- Add sharing options and input fields here -->
+    <button @click="closeShareDialog">Close</button>
+  </div>
+</div>
+
 <div class="folders">
   <div v-for="folder in folders" :key="folder">
     <i class="fas fa-folder" @click="openFolder(folder)"></i>
@@ -51,26 +61,34 @@
   </div>
 </template>
 
+
 <script>
+
 export default {
+    name: 'RouteIndex4',
+  computed: {
+    username() {
+      return this.$route.params.username;
+    },
+  },
   data() {
     return {
       currentPath: '/',
       newFolderName: '',
       folders: [],
       uploadedFiles: [],
- 
         currentFolderContents: [],
+         showShareDialog: false,
     };
   },
+
   created() {
-    // Load folder structure and uploaded files from sessionStorage when the component is created
-    const storedFolders = sessionStorage.getItem('folders');
+   const storedFolders = sessionStorage.getItem(`folders_${this.username}`);
     if (storedFolders) {
       this.folders = JSON.parse(storedFolders);
     }
 
-    const storedUploadedFiles = sessionStorage.getItem('uploadedFiles');
+    const storedUploadedFiles = sessionStorage.getItem(`uploadedFiles_${this.username}`);
     if (storedUploadedFiles) {
       this.uploadedFiles = JSON.parse(storedUploadedFiles);
     }
@@ -95,6 +113,15 @@ export default {
      forceRerender() {
       this.$forceUpdate();
     },
+      openShareDialog() {
+      // Show the ShareDialog component when the "Share" button is clicked
+      this.showShareDialog = true;
+    },
+
+    closeShareDialog() {
+      // Hide the ShareDialog component when the dialog is closed
+      this.showShareDialog = false;
+    },
     createFolder() {
       const newFolder = `${this.currentPath}${this.newFolderName}/`;
 
@@ -108,8 +135,7 @@ export default {
       this.folders.push(newFolder);
       this.newFolderName = ''; // Clear the input field
 
-      // Save the updated folder structure in sessionStorage
-      sessionStorage.setItem('folders', JSON.stringify(this.folders));
+  sessionStorage.setItem(`folders_${this.username}`, JSON.stringify(this.folders));
     },
         openFolder(folder) {
       this.currentPath = folder;
@@ -117,9 +143,8 @@ export default {
     },
 
    updateCurrentFolderContents() {
-      // Filter files and folders that belong to the current folder
       this.currentFolderContents = this.uploadedFiles.filter((item) => {
-        return item.directory === this.currentPath;
+        return item.directory === this.currentPath && item.username === this.username;
       });
     },
     getFolderName(folder) {
@@ -130,29 +155,33 @@ export default {
       if (index !== -1) {
         this.folders.splice(index, 1);
 
-        // Save the updated folder structure in sessionStorage
-        sessionStorage.setItem('folders', JSON.stringify(this.folders));
+       sessionStorage.setItem(`folders_${this.username}`, JSON.stringify(this.folders));
       }
     },
     uploadFiles() {
       const fileInput = this.$refs.fileInput;
       const files = fileInput.files;
-
+     
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        const currentTime = new Date().toLocaleString();
         const fileDetails = {
           name: file.name,
           size: file.size,
           directory: this.currentPath,
+            owner: this.username, // Assuming username is the owner
+         uploadTime: currentTime,
         };
         this.uploadedFiles.push(fileDetails);
+      this.$emit('newFileAdded', fileDetails);
+
       }
 
       // Clear the file input field
       fileInput.value = '';
 
       // Save the updated uploaded files in sessionStorage
-      sessionStorage.setItem('uploadedFiles', JSON.stringify(this.uploadedFiles));
+      sessionStorage.setItem(`uploadedFiles_${this.username}`, JSON.stringify(this.uploadedFiles));
     },
      toggleFileSelection(file) {
       file.selected = !file.selected;
@@ -190,8 +219,7 @@ export default {
         }
       });
       
-      // Save the updated uploaded files in sessionStorage
-      sessionStorage.setItem('uploadedFiles', JSON.stringify(this.uploadedFiles));
+     sessionStorage.setItem(`uploadedFiles_${this.username}`, JSON.stringify(this.uploadedFiles));
 
       // Clear the selected files
       this.uploadedFiles = this.uploadedFiles.filter((file) => !file.selected);
@@ -209,9 +237,7 @@ export default {
       selectedFiles.forEach((file) => {
         file.directory = this.currentPath;
       });
-
-      // Save the updated uploaded files in sessionStorage
-      sessionStorage.setItem('uploadedFiles', JSON.stringify(this.uploadedFiles));
+     sessionStorage.setItem(`uploadedFiles_${this.username}`, JSON.stringify(this.uploadedFiles));
 
       // Clear the selected files
       selectedFiles.forEach((file) => {
@@ -224,16 +250,14 @@ export default {
     
       deleteSelectedFiles() {
       this.uploadedFiles = this.uploadedFiles.filter((file) => !file.selected);
-      // Save the updated uploaded files in sessionStorage
-      sessionStorage.setItem('uploadedFiles', JSON.stringify(this.uploadedFiles));
+     sessionStorage.setItem(`uploadedFiles_${this.username}`, JSON.stringify(this.uploadedFiles));
     },
     deleteFile(file) {
       const index = this.uploadedFiles.indexOf(file);
       if (index !== -1) {
         this.uploadedFiles.splice(index, 1);
 
-        // Save the updated uploaded files in sessionStorage
-        sessionStorage.setItem('uploadedFiles', JSON.stringify(this.uploadedFiles));
+  sessionStorage.setItem(`uploadedFiles_${this.username}`, JSON.stringify(this.uploadedFiles));
       }
     },
   },
@@ -242,7 +266,7 @@ export default {
 
 
 <style scoped>
-/* Updated styles for better file management appearance */
+
 
 .file-management {
   padding: 20px;
@@ -320,32 +344,36 @@ export default {
   right: 5px;
   font-size: 1.2rem;
 }
-.button-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; /* Align buttons to the right */
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.file-actions button {
+.action-button {
   padding: 8px 16px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 10px;
 }
 
-.file-actions button:hover {
+.action-button:hover {
   background-color: #0056b3;
 }
 
-/* Style the "Select Destination Folder" and "Choose File" buttons */
-.destination-folder select,
-.upload-file input[type="file"] {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Styles for individual action buttons */
+.copy-button {
+  background-color: #28a745; /* Green color for copy */
 }
+
+.move-button {
+  background-color: #ffc107; /* Yellow color for move */
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red color for delete */
+}
+
+.download-button {
+  background-color: #17a2b8; /* Teal color for download */
+}
+
+
 </style>

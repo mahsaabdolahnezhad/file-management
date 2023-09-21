@@ -166,7 +166,7 @@ import { mapState , mapActions , mapMutations } from 'vuex';
 export default {
 
  computed: {
-    ...mapState(['username' ,]), 
+    ...mapState(['username',]), 
      namesFromRoute2() {
     return this.$store.state.namesFromRoute2;
   },
@@ -212,6 +212,7 @@ created() {
   } else {
     this.tableData = this.$store.state.tableData; // Initialize with Vuex data if session storage is empty
   }
+
 
   // Emit an event with the usernames
   this.$emit('.uniqueUsernames', this.getUsernames());
@@ -366,7 +367,7 @@ created() {
  
    this.$emit('.uniqueUsernames', this.getUsernames());
      this.setUsernames(this.getUsernames());
-
+    
     },
       initializeTableData() {
       // Try loading data from session storage
