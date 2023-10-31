@@ -45,7 +45,7 @@
     "confirm": "تأیید",
     "cancelDelete": "لغو حذف"
   },
-    "RouteIndex2": {
+    "UserGroupManage": {
       "name":"نام",
     "addRow": "افزودن ردیف",
     "updateRows": "به‌روزرسانی ردیف‌ها",

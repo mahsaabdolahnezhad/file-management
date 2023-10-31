@@ -54,50 +54,19 @@
       </div>
     </div>
 
-    <!-- Add Row Dialog -->
-    <div v-if="isAddDialogVisible" class="dialog-overlay">
-      <div class="add-dialog">
-        <h2 class="add-dialog-title">{{ $t("UserGroupManage.addRowTitle") }}</h2>
-        <form @submit.prevent="addRow" class="add-form">
-          <!-- Name -->
-          <label for="name">{{ $t("UserGroupManage.name") }}:</label>
-          <input
-            id="name"
-            v-model="rowData.name"
-            required
-            :maxlength="48"
-            :minlength="5"
-            class="styled-input"
-            :disabled="editing"
-          />
-          <!-- User (Multi-select) -->
-          <label for="user">{{ $t("UserGroupManage.user") }}:</label>
-          <select
-            id="user"
-            v-model="rowData.user"
-            multiple
-            class="styled-selects"
-          >
-            <option
-              v-for="(username, index) in usernames"
-              :value="username"
-              :key="index"
-            >
-              {{ username }}
-            </option>
-          </select>
 
-          <div class="dialog-buttons">
-            <button type="submit" class="dialog-button add-button">
-              {{ $t("UserGroupManage.addButton") }}
-            </button>
-            <button @click="closeAddDialog" class="dialog-button cancel-button">
-              {{ $t("UserGroupManage.cancelButton") }}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <add-usergroup
+        :is-add-dialog-visible="isAddDialogVisible"
+    :row-data="rowData"
+    :usernames="usernames"
+    @close-add-dialog="closeAddDialog"
+    @add-row="handleAddRow"
+    @update:row-data="updateRowData"
+      
+    ></add-usergroup>
+
+
+
     <!-- Edit Row Dialog -->
     <div v-if="isEditDialogVisible" class="dialog-overlay">
       <div class="add-dialog">
@@ -165,11 +134,16 @@
 <script>
 import { mapState } from "vuex";
 import store from "@/store";
+import AddUsergroup from "@/components/AddUsergroup.vue";
 export default {
   computed: {
     ...mapState(["username"]),
     ...mapState(["usernames"]),
   },
+    components: {
+    AddUsergroup,
+  },
+
 
   watch: {
     tableData2: {
@@ -190,7 +164,7 @@ export default {
         user: [],
       },
       rowData: {
-        name: "",
+        name: '',
         user: [],
       },
       tableData2: [],
@@ -302,7 +276,15 @@ export default {
 
       store.dispatch("setTableData", this.tableData2);
     },
-    showAddDialog() {
+ 
+ handleAddRow(newRow) {
+      this.tableData2.push(newRow);
+      this.store.dispatch("setTableData", this.tableData2);
+    },
+ updateRowData(newData) {
+      this.rowData = newData;
+    },
+   showAddDialog() {
       this.isAddDialogVisible = true;
     },
     closeAddDialog() {
@@ -310,50 +292,12 @@ export default {
       this.clearInputFields();
     },
 
-    addRow() {
-      // Validate form inputs
-      if (!this.validateForm()) {
-        return;
-      }
-      const newName = this.rowData.name;
-
-      // Check if the name is already in the tableData
-      if (this.tableData2.some((row) => row.name === newName)) {
-        this.showWarningMessage = true; // Add a data property for showing the warning message
-        return;
-      }
-
-      // Populate default attributes
-      const newRow = {
-        name: this.rowData.name,
-        user: [...this.rowData.user],
-        creator: this.username,
-        creationTime: new Date(),
-        lastModifier: this.username,
-        lastModificationTime: new Date(),
-      };
-
-      // Add the new row to the tableData array
-      this.tableData2.push(newRow);
-
-      store.dispatch("setTableData", this.tableData2);
-
-      this.closeAddDialog();
+    addRowToTable() {
+      this.$refs.addRowDialog.addRow(); // This could trigger the addRow method in the child component
     },
 
-    validateForm() {
-      let isValid = true;
-
-      if (
-        !this.rowData.name ||
-        this.rowData.name.length < 5 ||
-        this.rowData.name.length > 48
-      ) {
-        // Invalid name
-        isValid = false;
-      }
-
-      return isValid;
+    validateAddRowForm() {
+      this.$refs.addRowDialog.validateForm(); // This might trigger the validateForm method in the child component
     },
 
     clearInputFields() {

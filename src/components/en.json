@@ -15,7 +15,7 @@
     "greenTheme": "Green",
     "redTheme": "Red"
   },
-  "RouteIndex1": {
+  "UserManage": {
     "addRow": "Add Row",
     "updateRows": "Update Rows",
     "addRowTitle": "Add Row",
@@ -45,7 +45,7 @@
     "confirm": "Confirm",
     "cancelDelete": "Cancel"
   },
-  "RouteIndex2": {
+  "UserGroupManage": {
     "name":"name",
     "addRow": "Add Row",
     "updateRows": "Update Rows",
