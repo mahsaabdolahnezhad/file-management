@@ -25,14 +25,10 @@
 <script>
 export default {
   props: ['files'],
-  created() {
-    // Listen for the "newFileAdded" event from RouteIndex4
-    this.$root.$on('newFileAdded', (fileDetails) => {
-      // Add the new file to the files data (which is actually a prop)
-      this.files.push(fileDetails);
-    });
-  },
-};
+
+
+}
+
 </script>
 
 <style scoped>

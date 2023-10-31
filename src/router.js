@@ -6,19 +6,27 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 import LoginForm from "./components/LoginForm.vue";
 import DashBoard from "./components/DashBoard.vue"; 
-import RouteIndex1 from "./components/RouteIndex1.vue";
-import RouteIndex2 from "./components/RouteIndex2.vue";
-import RouteIndex3 from "./components/RouteIndex3.vue"; 
- import RouteIndex4 from "./components/RouteIndex4.vue"; 
+import UserManage from "./components/UserManage.vue";
+import UserGroupManage from "./components/UserGroupManage.vue";
+import StorageSpace from "./components/StorageSpace.vue"; 
+ import FileManagement from "./components/FileManagement.vue"; 
  
 
 const routes = [
   { path: "/", component: LoginForm },
   { path: "/dash", name: "Dashboard", component: DashBoard },
-  { path: "/RouteIndex1", name: "RouteIndex1", component: RouteIndex1 },
-  { path: "/RouteIndex2", name: "RouteIndex2", component: RouteIndex2 },
-  { path: "/RouteIndex3", name: "RouteIndex3", component: RouteIndex3 },
-  { path: "/RouteIndex4", name: "RouteIndex4", component: RouteIndex4 },
+  { path: "/UserManage", name: "UserManage", component: UserManage },
+  {
+    path: "/UserGroupManage",
+    name: "UserGroupManage",
+    component: UserGroupManage,
+  },
+  { path: "/StorageSpace", name: "StorageSpace", component: StorageSpace },
+  {
+    path: "/FileManagement",
+    name: "FileManagement",
+    component: FileManagement,
+  },
   {
     path: "/dash",
     name: "DashBoard",
@@ -26,14 +34,14 @@ const routes = [
   },
   {
     path: "/dashboard/file-management/:username", // Add a route parameter for the username
-    name: "RouteIndex4",
-    component: RouteIndex4,
+    name: "FileManagement",
+    component: FileManagement,
   },
   {
-    path: "/routeindex3/:username",
-    name: "RouteIndex3",
-    component: RouteIndex3,
-    props: true, // This allows route params to be passed as props to the component
+    path: "/StorageSpace/:username",
+    name: "StorageSpace",
+    component: StorageSpace,
+    props: true,
   },
 ];
 

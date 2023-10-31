@@ -3,24 +3,24 @@
     <div class="frame">
       <div class="table-container">
         <button class="add-row-button" @click="showAddDialog">
-          {{ $t("RouteIndex2.addRow") }}
+          {{ $t("UserGroupManage.addRow") }}
         </button>
         <button class="update-row-button" @click="openEditDialog">
-          {{ $t("RouteIndex2.updateRows") }}
+          {{ $t("UserGroupManage.updateRows") }}
         </button>
 
         <div class="scrollable-table">
           <table class="styled-table">
             <thead>
               <tr>
-                <th>{{ $t("RouteIndex2.update") }}</th>
-                <th>{{ $t("RouteIndex2.name") }}</th>
-                <th>{{ $t("RouteIndex2.user") }}</th>
-                <th>{{ $t("RouteIndex2.creator") }}</th>
-                <th>{{ $t("RouteIndex2.creationTime") }}</th>
-                <th>{{ $t("RouteIndex2.lastModifier") }}</th>
-                <th>{{ $t("RouteIndex2.lastModificationTime") }}</th>
-                <th>{{ $t("RouteIndex2.delete") }}</th>
+                <th>{{ $t("UserGroupManage.update") }}</th>
+                <th>{{ $t("UserGroupManage.name") }}</th>
+                <th>{{ $t("UserGroupManage.user") }}</th>
+                <th>{{ $t("UserGroupManage.creator") }}</th>
+                <th>{{ $t("UserGroupManage.creationTime") }}</th>
+                <th>{{ $t("UserGroupManage.lastModifier") }}</th>
+                <th>{{ $t("UserGroupManage.lastModificationTime") }}</th>
+                <th>{{ $t("UserGroupManage.delete") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -57,10 +57,10 @@
     <!-- Add Row Dialog -->
     <div v-if="isAddDialogVisible" class="dialog-overlay">
       <div class="add-dialog">
-        <h2 class="add-dialog-title">{{ $t("RouteIndex2.addRowTitle") }}</h2>
+        <h2 class="add-dialog-title">{{ $t("UserGroupManage.addRowTitle") }}</h2>
         <form @submit.prevent="addRow" class="add-form">
           <!-- Name -->
-          <label for="name">{{ $t("RouteIndex2.name") }}:</label>
+          <label for="name">{{ $t("UserGroupManage.name") }}:</label>
           <input
             id="name"
             v-model="rowData.name"
@@ -71,7 +71,7 @@
             :disabled="editing"
           />
           <!-- User (Multi-select) -->
-          <label for="user">{{ $t("RouteIndex2.user") }}:</label>
+          <label for="user">{{ $t("UserGroupManage.user") }}:</label>
           <select
             id="user"
             v-model="rowData.user"
@@ -89,10 +89,10 @@
 
           <div class="dialog-buttons">
             <button type="submit" class="dialog-button add-button">
-              {{ $t("RouteIndex2.addButton") }}
+              {{ $t("UserGroupManage.addButton") }}
             </button>
             <button @click="closeAddDialog" class="dialog-button cancel-button">
-              {{ $t("RouteIndex2.cancelButton") }}
+              {{ $t("UserGroupManage.cancelButton") }}
             </button>
           </div>
         </form>
@@ -101,10 +101,10 @@
     <!-- Edit Row Dialog -->
     <div v-if="isEditDialogVisible" class="dialog-overlay">
       <div class="add-dialog">
-        <h2 class="add-dialog-title">{{ $t("RouteIndex2.editRowTitle") }}</h2>
+        <h2 class="add-dialog-title">{{ $t("UserGroupManage.editRowTitle") }}</h2>
         <form @submit.prevent="editRow" class="add-form">
           <!-- Name (Unchangeable) -->
-          <label for="edit-name">{{ $t("RouteIndex2.name") }}:</label>
+          <label for="edit-name">{{ $t("UserGroupManage.name") }}:</label>
           <input
             id="edit-name"
             v-model="editedRow.name"
@@ -113,7 +113,7 @@
           />
           <!-- User (Changeable) -->
 
-          <label for="edit-user">{{ $t("RouteIndex2.user") }}:</label>
+          <label for="edit-user">{{ $t("UserGroupManage.user") }}:</label>
           <select
             id="edit-user"
             v-model="editedRow.user"
@@ -130,13 +130,13 @@
           </select>
           <div class="dialog-buttons">
             <button type="submit" class="dialog-button add-button">
-              {{ $t("RouteIndex2.updatebutton") }}
+              {{ $t("UserGroupManage.updatebutton") }}
             </button>
             <button
               @click="closeEditDialog"
               class="dialog-button cancel-button"
             >
-              {{ $t("RouteIndex2.cancelButton") }}
+              {{ $t("UserGroupManage.cancelButton") }}
             </button>
           </div>
         </form>
@@ -147,14 +147,14 @@
     <div v-if="confirmDeleteIndex !== null" class="confirmation-message">
       <div class="confirmation-box">
         <div class="confirmation-text">
-          {{ $t("RouteIndex2.deleteConfirmation") }}
+          {{ $t("UserGroupManage.deleteConfirmation") }}
         </div>
         <div class="confirmation-buttons">
           <button class="confirm" @click="deleteRow(confirmDeleteIndex)">
-            {{ $t("RouteIndex2.confirm") }}
+            {{ $t("UserGroupManage.confirm") }}
           </button>
           <button class="cancel" @click="cancelDelete">
-            {{ $t("RouteIndex2.cancel") }}
+            {{ $t("UserGroupManage.cancel") }}
           </button>
         </div>
       </div>

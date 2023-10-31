@@ -2,25 +2,25 @@
   <div class="page-container">
     <div class="frame">
       <div class="table-container">
-        <button class="add-row-button" @click="showAddDialog">{{ $t('RouteIndex1.addRow') }}</button>
-        <button class="update-row-button" @click="openEditDialog">{{ $t('RouteIndex1.updateRows') }}</button>
+        <button class="add-row-button" @click="showAddDialog">{{ $t('UserManage.addRow') }}</button>
+        <button class="update-row-button" @click="openEditDialog">{{ $t('UserManage.updateRows') }}</button>
 
 
         <div class="scrollable-table">
           <table class="styled-table">
                  <thead>
         <tr>
-       <th>{{ $t('RouteIndex1.update') }}</th>
-                <th>{{ $t('RouteIndex1.username') }}</th>
-                <th>{{ $t('RouteIndex1.firstName') }}</th>
-                <th>{{ $t('RouteIndex1.lastName') }}</th>
-                <th>{{ $t('RouteIndex1.type') }}</th>
-                <th>{{ $t('RouteIndex1.userGroup') }}</th>
-                <th>{{ $t('RouteIndex1.creater') }}</th>
-                <th>{{ $t('RouteIndex1.creationTime') }}</th>
-                <th>{{ $t('RouteIndex1.lastModifier') }}</th>
-                <th>{{ $t('RouteIndex1.lastModificationTime') }}</th>
-                <th>{{ $t('RouteIndex1.delete') }}</th>
+       <th>{{ $t('UserManage.update') }}</th>
+                <th>{{ $t('UserManage.username') }}</th>
+                <th>{{ $t('UserManage.firstName') }}</th>
+                <th>{{ $t('UserManage.lastName') }}</th>
+                <th>{{ $t('UserManage.type') }}</th>
+                <th>{{ $t('UserManage.userGroup') }}</th>
+                <th>{{ $t('UserManage.creater') }}</th>
+                <th>{{ $t('UserManage.creationTime') }}</th>
+                <th>{{ $t('UserManage.lastModifier') }}</th>
+                <th>{{ $t('UserManage.lastModificationTime') }}</th>
+                <th>{{ $t('UserManage.delete') }}</th>
          
         </tr>
       </thead>
@@ -55,9 +55,9 @@
     <!-- Add Row Dialog -->
     <div v-if="isAddDialogVisible" class="dialog-overlay">
       <div class="add-dialog">
-      <h2 class="add-dialog-title">{{ $t('RouteIndex1.addRowTitle') }}</h2>
+      <h2 class="add-dialog-title">{{ $t('UserManage.addRowTitle') }}</h2>
         <form @submit.prevent="addRow" class="add-form">
-           <label for="username">{{ $t('RouteIndex1.usernameLabel') }}:</label>
+           <label for="username">{{ $t('UserManage.usernameLabel') }}:</label>
           <input
             id="username"
             v-model="rowData.username"
@@ -68,7 +68,7 @@
             class="styled-input"
           />
            <!-- First Name -->
-          <label for="firstname" >{{ $t('RouteIndex1.firstName') }}:</label>
+          <label for="firstname" >{{ $t('UserManage.firstName') }}:</label>
           <input
             id="firstname"
             v-model="rowData.firstname"
@@ -77,7 +77,7 @@
           />
           
           <!-- Last Name -->
-          <label for="lastname">{{ $t('RouteIndex1.lastName') }}:</label>
+          <label for="lastname">{{ $t('UserManage.lastName') }}:</label>
           <input
             id="lastname"
             v-model="rowData.lastname"
@@ -86,14 +86,14 @@
           />
           
           <!-- Type -->
-          <label for="type">{{ $t('RouteIndex1.type') }}:</label>
+          <label for="type">{{ $t('UserManage.type') }}:</label>
           <select id="type" v-model="rowData.type" required  class="styled-select">
-            <option value="admin">{{ $t('RouteIndex1.admin') }}</option>
-            <option value="user">{{ $t('RouteIndex1.user') }}</option>
+            <option value="admin">{{ $t('UserManage.admin') }}</option>
+            <option value="user">{{ $t('UserManage.user') }}</option>
           </select>
           
           <!-- User Group -->
-          <label for="usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
+          <label for="usergroup">{{ $t('UserManage.userGroup') }}:</label>
 <select id="usergroup" v-model="rowData.usergroup" class="styled-select">
   <option v-for="name in namesFromRoute2" :value="name" :key="name">{{ name }}</option>
 </select>
@@ -102,44 +102,44 @@
     {{ $t('RoueIndex1.usernameExists') }}
     </div>
           <div class="dialog-buttons">
-           <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex1.addButton') }}</button>
-                <button @click="closeAddDialog" class="dialog-button cancel-button">{{ $t('RouteIndex1.cancelButton') }}</button>
+           <button type="submit" class="dialog-button add-button">{{ $t('UserManage.addButton') }}</button>
+                <button @click="closeAddDialog" class="dialog-button cancel-button">{{ $t('UserManage.cancelButton') }}</button>
           </div>
         </form>
       </div>
     </div>
   <div v-if="isEditDialogVisible" class="dialog-overlay">
   <div class="add-dialog">
-       <h2 class="add-dialog-title">{{ $t('RouteIndex1.editRowTitle') }}</h2>
+       <h2 class="add-dialog-title">{{ $t('UserManage.editRowTitle') }}</h2>
     <form @submit.prevent="editRow" class="add-form">
       <!-- Input fields for editing -->
-  <label for="edit-firstname">{{ $t('RouteIndex1.firstName') }}:</label>
+  <label for="edit-firstname">{{ $t('UserManage.firstName') }}:</label>
       <input
         id="edit-firstname"
         v-model="editedRow.firstname"
         :maxlength="48"
         class="styled-input"
       />
-<label for="edit-lastname">{{ $t('RouteIndex1.lastName') }}:</label>
+<label for="edit-lastname">{{ $t('UserManage.lastName') }}:</label>
       <input
         id="edit-firstname"
         v-model="editedRow.lastname"
         :maxlength="48"
         class="styled-input"
       />
-       <label for="edit-type">{{ $t('RouteIndex1.type') }}:</label>
+       <label for="edit-type">{{ $t('UserManage.type') }}:</label>
   <select id="edit-type" v-model="editedRow.type" required  class="styled-select">
-    <option value="admin">{{ $t('RouteIndex1.admin') }}</option>
-            <option value="user">{{ $t('RouteIndex1.user') }}</option>
+    <option value="admin">{{ $t('UserManage.admin') }}</option>
+            <option value="user">{{ $t('UserManage.user') }}</option>
   </select>
   
-    <label for="edit-usergroup">{{ $t('RouteIndex1.userGroup') }}:</label>
+    <label for="edit-usergroup">{{ $t('UserManage.userGroup') }}:</label>
 <select id="usergroup" v-model="editedRow.usergroup" class="styled-select">
   <option v-for="name in namesFromRoute2" :value="name" :key="name">{{ name }}</option>
 </select>
       <div class="dialog-buttons">
-        <button type="submit" class="dialog-button add-button">{{ $t('RouteIndex1.updatebutton') }}</button>
-        <button @click="closeEditDialog" class="dialog-button cancel-button">{{ $t('RouteIndex1.cancelButton') }}</button>
+        <button type="submit" class="dialog-button add-button">{{ $t('UserManage.updatebutton') }}</button>
+        <button @click="closeEditDialog" class="dialog-button cancel-button">{{ $t('UserManage.cancelButton') }}</button>
       </div>
     </form>
   </div>
@@ -149,11 +149,11 @@
       <div v-if="confirmDeleteIndex !== null" class="confirmation-message">
       <div class="confirmation-box">
        <div class="confirmation-text">
-         {{ $t('RouteIndex1.deleteConfirmation') }}
+         {{ $t('UserManage.deleteConfirmation') }}
         </div>
         <div class="confirmation-buttons">
-          <button class="confirm" @click="deleteRow(confirmDeleteIndex)">{{ $t('RouteIndex1.confirm') }}</button>
-          <button class="cancel" @click="cancelDelete">{{ $t('RouteIndex1.cancel') }}</button>
+          <button class="confirm" @click="deleteRow(confirmDeleteIndex)">{{ $t('UserManage.confirm') }}</button>
+          <button class="cancel" @click="cancelDelete">{{ $t('UserManage.cancel') }}</button>
         </div>
       </div>
     </div>
@@ -407,9 +407,6 @@ created() {
   }
 };
 </script>
-
-
-
 
 
 
