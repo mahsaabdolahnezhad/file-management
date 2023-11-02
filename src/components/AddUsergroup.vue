@@ -13,7 +13,7 @@
             :maxlength="48"
             :minlength="5"
             class="styled-input"
-            :disabled="editing"
+            :disabled="false"
           />
           <!-- User (Multi-select) -->
           <label for="user">{{ $t("UserGroupManage.user") }}:</label>
@@ -33,7 +33,7 @@
           </select>
 
           <div class="dialog-buttons">
-            <button type="submit" class="dialog-button add-button">
+            <button  @click="addRow" type="submit" class="dialog-button add-button">
               {{ $t("UserGroupManage.addButton") }}
             </button>
             <button @click="closeAddDialog" class="dialog-button cancel-button">

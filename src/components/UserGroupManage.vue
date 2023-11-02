@@ -55,15 +55,15 @@
     </div>
 
 
-        <add-usergroup
-        :is-add-dialog-visible="isAddDialogVisible"
+
+    <add-usergroup
+    :is-add-dialog-visible="isAddDialogVisible"
     :row-data="rowData"
     :usernames="usernames"
     @close-add-dialog="closeAddDialog"
     @add-row="handleAddRow"
     @update:row-data="updateRowData"
-      
-    ></add-usergroup>
+></add-usergroup>
 
 
 
@@ -176,7 +176,7 @@ export default {
   },
 
   created() {
-    this.usernames = this.$store.state.usernames;
+
     const tableData2FromStorage = JSON.parse(
       sessionStorage.getItem("tableData2")
     );
@@ -277,12 +277,13 @@ export default {
       store.dispatch("setTableData", this.tableData2);
     },
  
- handleAddRow(newRow) {
-      this.tableData2.push(newRow);
-      this.store.dispatch("setTableData", this.tableData2);
+   handleAddRow(newRow) {
+        this.tableData2.push(newRow);
+        sessionStorage.setItem("tableData2", JSON.stringify(this.tableData2)); // Save in session storage
+        this.isAddDialogVisible = false; // Close the add dialog
     },
- updateRowData(newData) {
-      this.rowData = newData;
+    updateRowData(newData) {
+        this.rowData = newData;
     },
    showAddDialog() {
       this.isAddDialogVisible = true;
