@@ -33,7 +33,7 @@
           </select>
 
           <div class="dialog-buttons">
-            <button  @click="addRow" type="submit" class="dialog-button add-button">
+            <button   type="submit" class="dialog-button add-button">
               {{ $t("UserGroupManage.addButton") }}
             </button>
             <button @click="closeAddDialog" class="dialog-button cancel-button">
@@ -49,14 +49,15 @@
 export default {
   props: {
     isAddDialogVisible: Boolean,
-  rowData: Object,
+    rowData: Object,
     usernames: Array,
   },
     data() {
     return {
       localName: '',
       localUser: [],
-      localRowData: {} // For deep props
+      localRowData: {} ,
+       tableData2: [],
     };
   },
   mounted() {

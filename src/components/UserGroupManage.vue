@@ -5,37 +5,23 @@
         <button class="add-row-button" @click="showAddDialog">
           {{ $t("UserGroupManage.addRow") }}
         </button>
-        <button class="update-row-button" @click="openEditDialog">
-          {{ $t("UserGroupManage.updateRows") }}
-        </button>
-
+     
         <div class="scrollable-table">
           <table class="styled-table">
             <thead>
               <tr>
-                <th>{{ $t("UserGroupManage.update") }}</th>
                 <th>{{ $t("UserGroupManage.name") }}</th>
                 <th>{{ $t("UserGroupManage.user") }}</th>
                 <th>{{ $t("UserGroupManage.creator") }}</th>
                 <th>{{ $t("UserGroupManage.creationTime") }}</th>
                 <th>{{ $t("UserGroupManage.lastModifier") }}</th>
                 <th>{{ $t("UserGroupManage.lastModificationTime") }}</th>
-                <th>{{ $t("UserGroupManage.delete") }}</th>
+                <th>{{ $t("UserGroupManage.update&delete") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(row, index) in tableData2" :key="index">
-                <div class="checkbox-container">
-                  <td>
-                    <input
-                      type="checkbox"
-                      v-model="row.selected"
-                      class="checkbox-input"
-                      :checked="index === selectedRowIndex"
-                      @click="selectRow(index)"
-                    />
-                  </td>
-                </div>
+    
                 <td>{{ row.name }}</td>
                 <td>{{ row.user }}</td>
                 <td>{{ row.creator }}</td>
@@ -43,6 +29,10 @@
                 <td>{{ row.lastModifier }}</td>
                 <td>{{ row.lastModificationTime }}</td>
                 <td>
+                   <!-- Edit Icon -->
+            <span @click="openEditDialog(index)" class="edit-icon">
+              <i class="fas fa-edit"></i>
+            </span>
                   <span @click="confirmDelete(index)" class="delete-icon">
                     <i class="fas fa-trash-alt"></i>
                   </span>
@@ -58,59 +48,22 @@
 
     <add-usergroup
     :is-add-dialog-visible="isAddDialogVisible"
-    :row-data="rowData"
+    :row-data.sync="rowData"
     :usernames="usernames"
     @close-add-dialog="closeAddDialog"
     @add-row="handleAddRow"
     @update:row-data="updateRowData"
 ></add-usergroup>
 
+<edit-usergroup
+      :is-edit-dialog-visible="isEditDialogVisible"
+    :edit-row.sync="editedRow"
+    :usernames="usernames"
+    @close-edit-dialog="closeEditDialog"
+    @edit-row="handleEditRow"
+    @update:edited-row="updateEditedRow">
+</edit-usergroup>
 
-
-    <!-- Edit Row Dialog -->
-    <div v-if="isEditDialogVisible" class="dialog-overlay">
-      <div class="add-dialog">
-        <h2 class="add-dialog-title">{{ $t("UserGroupManage.editRowTitle") }}</h2>
-        <form @submit.prevent="editRow" class="add-form">
-          <!-- Name (Unchangeable) -->
-          <label for="edit-name">{{ $t("UserGroupManage.name") }}:</label>
-          <input
-            id="edit-name"
-            v-model="editedRow.name"
-            :disabled="true"
-            class="styled-input"
-          />
-          <!-- User (Changeable) -->
-
-          <label for="edit-user">{{ $t("UserGroupManage.user") }}:</label>
-          <select
-            id="edit-user"
-            v-model="editedRow.user"
-            multiple
-            class="styled-selects"
-          >
-            <option
-              v-for="(username, index) in usernames"
-              :value="username"
-              :key="index"
-            >
-              {{ username }}
-            </option>
-          </select>
-          <div class="dialog-buttons">
-            <button type="submit" class="dialog-button add-button">
-              {{ $t("UserGroupManage.updatebutton") }}
-            </button>
-            <button
-              @click="closeEditDialog"
-              class="dialog-button cancel-button"
-            >
-              {{ $t("UserGroupManage.cancelButton") }}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <!-- Delete Confirmation Dialog -->
     <div v-if="confirmDeleteIndex !== null" class="confirmation-message">
@@ -135,6 +88,7 @@
 import { mapState } from "vuex";
 import store from "@/store";
 import AddUsergroup from "@/components/AddUsergroup.vue";
+import EditUsergroup from "@/components/EditUsergroup.vue";
 export default {
   computed: {
     ...mapState(["username"]),
@@ -142,6 +96,7 @@ export default {
   },
     components: {
     AddUsergroup,
+    EditUsergroup,
   },
 
 
@@ -203,31 +158,13 @@ export default {
       this.usernames = Array.from(new Set(usernames)); // Update the computed property
     },
 
-    selectRow(index) {
-      // Deselect all rows
-      this.tableData2.forEach((row) => {
-        row.selected = false;
-      });
 
-      // Select the clicked row
-      this.tableData2[index].selected = true;
-
-      // Update the selectedRowIndex
+    openEditDialog(index) {
+ this.editedRow = { ...this.tableData2[index] };
       this.selectedRowIndex = index;
-    },
 
-    openEditDialog() {
-      // Find the index of the first selected row
-      const selectedIndex = this.tableData2.findIndex((row) => row.selected);
-
-      if (selectedIndex !== -1) {
-        // Store the selected row's index and data for editing
-        this.selectedRowIndex = selectedIndex;
-        this.editedRow = { ...this.tableData2[selectedIndex] };
-
-        // Show the edit dialog
         this.isEditDialogVisible = true;
-      }
+      
     },
 
     closeEditDialog() {
@@ -236,24 +173,14 @@ export default {
       this.selectedRowIndex = null;
       this.clearEditFields();
     },
-
-    editRow() {
-      if (this.selectedRowIndex !== -1) {
-        const currentTime = new Date();
-
-        // Update the selected row's data
-        const selectedRow = this.tableData2[this.selectedRowIndex];
-        selectedRow.user = [...this.editedRow.user]; // Update the 'user' field
-        selectedRow.lastModifier = this.username;
-        selectedRow.lastModificationTime = currentTime;
-
-        store.dispatch("setTableData", this.tableData2);
-
-        // Close the edit dialog and reset data
-        this.closeEditDialog();
-      }
-    },
-
+handleEditRow(){
+  store.dispatch("setTableData", this.tableData2);
+         this.isEditDialogVisible = false; 
+},
+updateEditedRow(newData){
+    this.editedRow = newData;
+},
+  
     clearEditFields() {
       // Reset the edited row's data
       this.editedRow = {
@@ -280,7 +207,7 @@ export default {
    handleAddRow(newRow) {
         this.tableData2.push(newRow);
         sessionStorage.setItem("tableData2", JSON.stringify(this.tableData2)); // Save in session storage
-        this.isAddDialogVisible = false; // Close the add dialog
+        this.isAddDialogVisible = false; 
     },
     updateRowData(newData) {
         this.rowData = newData;
@@ -293,13 +220,7 @@ export default {
       this.clearInputFields();
     },
 
-    addRowToTable() {
-      this.$refs.addRowDialog.addRow(); // This could trigger the addRow method in the child component
-    },
 
-    validateAddRowForm() {
-      this.$refs.addRowDialog.validateForm(); // This might trigger the validateForm method in the child component
-    },
 
     clearInputFields() {
       this.rowData = {
@@ -336,8 +257,8 @@ export default {
 }
 
 /* Add Row and Update Row buttons */
-.add-row-button,
-.update-row-button {
+.add-row-button
+ {
   align-self: center;
   margin-top: 10px;
   padding: 10px 20px;
@@ -419,15 +340,17 @@ export default {
   background-color: #dcdcdc;
 }
 
-/* Delete icon */
+.edit-icon,
 .delete-icon {
   cursor: pointer;
-  color: #e74c3c; /* Red color */
+  margin-right: 5px;
+  color: #3498db; /* Blue color for edit icon */
   transition: color 0.3s;
 }
 
+.edit-icon:hover,
 .delete-icon:hover {
-  color: #c0392b; /* Darker red on hover */
+  color: #2980b9; /* Darker blue on hover for edit icon */
 }
 
 /* Confirmation dialog */

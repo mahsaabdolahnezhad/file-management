@@ -26,18 +26,16 @@
 
     </header>
     <main class="content">
-
-    </main>
-    <footer class="footer">
-    <div  class="theme-selector-container">
+  <div  class="theme-selector-container">
         <label for="language-selector">{{ $t('dashboard.selectLanguage') }}</label>
         <select id="language-selector" v-model="selectedLanguage" @change="changeLanguage(selectedLanguage)">
           <option value="en">{{ $t('dashboard.english') }}</option>
           <option value="fa">{{ $t('dashboard.persian') }}</option>
         </select>
       </div>
-
-    </footer>
+        <router-view></router-view>
+    </main>
+   
   </div>
 
 
@@ -224,24 +222,19 @@ background:#eea1eb;
   padding: 20px;
 }
 
-.footer {
-position: fixed;
-  bottom: 0;
-  width: 100%;
-  left: 0;
-   z-index: 1000;
-  padding: 20px;
 
-}
+
 
 .theme-selector-container {
   position: absolute;
   top:0;
   right: 50px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 6px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   background-color: antiquewhite;
+  margin-right: 225px;
+  margin-top:11px;
 
 }
 
@@ -250,6 +243,7 @@ position: fixed;
     background-color: transparent;/* Light pink background color */
   color: black; /* White text color */
   border: none;
+ 
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;

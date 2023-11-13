@@ -65,7 +65,7 @@
 <script>
 
 export default {
-    name: 'RouteIndex4',
+    name: 'FileManagement',
   computed: {
     username() {
       return this.$route.params.username;
