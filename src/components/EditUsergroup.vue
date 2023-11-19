@@ -1,7 +1,7 @@
 <template>
   
     <!-- Edit Row Dialog -->
-    <div v-if="isEditDialogVisible" class="dialog-overlay">
+    <div  class="dialog-overlay">
       <div class="add-dialog">
         <h2 class="add-dialog-title">{{ $t("UserGroupManage.editRowTitle") }}</h2>
         <form @submit.prevent="editRow" class="add-form">
@@ -51,33 +51,35 @@
 export default {
   props: {
     isEditDialogVisible: Boolean,
-  editedRow: Object,
     usernames: Array,
+    tableData2: Array,
   },
     data() {
     return {
       editedName: '',
       editedUser: [],
       localRow: {} ,
-       tableData2: [],
     };
   },
-  mounted() {
-    // When the component is mounted, set the initial values
+  watch: {
+    editedRow:{
+  handler(){
+   // When the component is mounted, set the initial values
     this.editedName = this.editedRow.name;
     this.editedUser = [...this.editedRow.user]; // Assuming it's an array
     // For deep objects, you might need to create a local copy like this
     this.localRow = Object.assign({}, this.editedRow);
   },
-  watch: {
-    // Watch for changes in local data and update the prop when changes occur
+  deep: true
+},
     localName(newVal) {
       this.$emit('update:editedRow', { ...this.editedRow, name: newVal });
     },
     localUser(newVal) {
       this.$emit('update:editedRow', { ...this.editedRow, user: newVal });
     }
-  },
+
+},
   methods: {
     closeEditDialog() {
       this.$emit('close-edit-dialog');
@@ -90,7 +92,7 @@ export default {
 
         // Update the selected row's data
         const selectedRow = this.tableData2[this.selectedRowIndex];
-        selectedRow.user = [...this.editedRow.user]; // Update the 'user' field
+        selectedRow.user = [...this.editedUser]; // Update the 'user' field
         selectedRow.lastModifier = this.username;
         selectedRow.lastModificationTime = currentTime;
 

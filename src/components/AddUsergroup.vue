@@ -49,15 +49,14 @@
 export default {
   props: {
     isAddDialogVisible: Boolean,
-    rowData: Object,
     usernames: Array,
+     tableData2: Array
   },
     data() {
     return {
       localName: '',
       localUser: [],
       localRowData: {} ,
-       tableData2: [],
     };
   },
   mounted() {
@@ -86,7 +85,7 @@ export default {
       if (!this.validateForm()) {
         return;
       }
-      const newName = this.rowData.name;
+      const newName = this.localName;
 
       if (this.tableData2.some((row) => row.name === newName)) {
         this.showWarningMessage = true;
@@ -94,8 +93,8 @@ export default {
       }
 
       const newRow = {
-        name: this.rowData.name,
-        user: [...this.rowData.user],
+        name: this.localName,
+        user: [...this.localUser],
         creator: this.username,
         creationTime: new Date(),
         lastModifier: this.username,
@@ -111,9 +110,9 @@ export default {
       let isValid = true;
 
       if (
-        !this.rowData.name ||
-        this.rowData.name.length < 5 ||
-        this.rowData.name.length > 48
+        !this.localName ||
+        this.localName.length < 5 ||
+        this.localName.length > 48
       ) {
         isValid = false;
       }

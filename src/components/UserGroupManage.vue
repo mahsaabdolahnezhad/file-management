@@ -48,17 +48,18 @@
 
     <add-usergroup
     :is-add-dialog-visible="isAddDialogVisible"
-    :row-data.sync="rowData"
     :usernames="usernames"
+    :table-data2="tableData2"
     @close-add-dialog="closeAddDialog"
     @add-row="handleAddRow"
     @update:row-data="updateRowData"
 ></add-usergroup>
 
 <edit-usergroup
+    v-if="isEditDialogVisible"
       :is-edit-dialog-visible="isEditDialogVisible"
-    :edit-row.sync="editedRow"
     :usernames="usernames"
+     :table-data2="tableData2"
     @close-edit-dialog="closeEditDialog"
     @edit-row="handleEditRow"
     @update:edited-row="updateEditedRow">
@@ -205,6 +206,8 @@ updateEditedRow(newData){
     },
  
    handleAddRow(newRow) {
+    
+    
         this.tableData2.push(newRow);
         sessionStorage.setItem("tableData2", JSON.stringify(this.tableData2)); // Save in session storage
         this.isAddDialogVisible = false; 
