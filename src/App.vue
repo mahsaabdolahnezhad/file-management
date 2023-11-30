@@ -1,6 +1,7 @@
 <template>
  <div id="app" :class="selectedTheme">
   <router-view :key="$route.fullPath" :selectedTheme="selectedTheme" />
+  
     <ThemeSwitcher v-if="$route.name === 'Dashboard'"  :initialTheme="selectedTheme" @theme-changed="changeTheme" />
   </div>
 </template>
@@ -8,10 +9,13 @@
 <script>
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
 
+
+
 export default {
   name: 'App',
   components: {
    ThemeSwitcher,
+   
   },
     data() {
     return {

@@ -10,13 +10,13 @@
       </div>
       <nav :class="{ 'open': isNavigationOpen }">
         <ul>
-   <ul>
-          <li @click="navigateToRoute('UserManage')">{{ $t('dashboard.userManagement') }}</li>
-          <li @click="navigateToRoute('UserGroupManage')">{{ $t('dashboard.manageUserGroups') }}</li>
-          <li @click="navigateToRoute('StorageSpace')">{{ $t('dashboard.storageSpace') }}</li>
-          <li @click="navigateToRoute2('FileManagement')" >{{ $t('dashboard.fileManagement') }}</li>
+        <li @click="selectComponent('UserManage')">User Management</li>
+        <li @click="selectComponent('UserGroupManage')">User Group Management</li> 
+        <li @click="selectComponent('StorageSpace')">Storage Space</li>
+        <li @click="selectComponent('FileManagement')">File Management</li>
+
         </ul>
-        </ul>
+
    <select v-model="selectedUsername" @change="virtualLogin"  class="select-box">
   <option selected="selected">artyabd</option>
   <option v-for="username in usernames" :key="username" :value="username">{{ username }}</option>
@@ -34,6 +34,7 @@
         </select>
       </div>
         <router-view></router-view>
+     <component :is="selectedComponent"></component>
     </main>
    
   </div>
@@ -43,9 +44,19 @@
 
 <script>
 import i18n from '@/i18n';
+import UserManage from '@/components/UserManage.vue';
+import UserGroupManage from '@/components/UserGroupManage.vue';
+import StorageSpace from '@/components/StorageSpace.vue';
+import FileManagement from '@/components/FileManagement.vue';
 
 export default {
   name: 'DashBoard',
+  components:{
+    UserManage,
+    UserGroupManage,
+    StorageSpace,
+    FileManagement,
+  },
    props: {
     selectedTheme: String, // Receive the selected theme as a prop
   },
@@ -58,6 +69,7 @@ export default {
        selectedUsername: '',
       tableData: [], 
      localSelectedTheme: 'theme-purple', 
+      selectedComponent: null,
     };
   },
     created() {
@@ -94,6 +106,10 @@ export default {
 },
 
   methods: {
+     selectComponent(componentName) {
+    this.selectedComponent = componentName;
+    this.closeNavigation(); // Optionally close navigation after selecting a component
+  },
    navigateToRoute(routeName) {
     this.$router.push({ name: routeName });
   },
